@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<script>
+			/*
+			
+			----------------------------------------------------------------------------
+			"THE BEER-WARE LICENSE" (Revision 42):
+			<debasishm89_at_gmail.com> wrote this file.  As long as you retain this notice you
+			can do whatever you want with this stuff. If we meet some day, and you think
+			this stuff is worth it, you can buy me a beer in return.   Debasish Mandal
+			----------------------------------------------------------------------------
+			
+			This JS code should be used for generating a python dict. of element attributes of different HTML elements.
+			In case of dynamic fuzzer, its usually generated on the fly, since its a static fuzzer you need to pre define html elements and their attributes to your test case.
+			Other wise you can use a list of well known attributes. It's completely your choice, how you write your test case. 			
+			*/
+			function getEleAttributes(ele){
+				buff = "['"
+				for( var p in ele ){
+					buff += p + "','";
+				}
+				buff = buff.slice(0, -2) + "]";
+				return buff
+			}
+			function generate() {
+				/*
+				Add your element list in this here and open this html in IE.				
+				*/
+				var elements = ["ARTICLE","ASISE","B","BDI","BDO", "BLOCKQUOTE","BR","BUTTON","CANVAS","CAPTION","CITE","COL","CODE","COMMAND","DATALIST","DD","DEL","DETAILS","DFN","DL","DT", "EM","STYLE","FIELDSET","FIGCAPTION","SCRIPT", "EMBED","FIGURE","FOOTER","HEADER","HGROUP","HR","I","INPUT","INS","KEYGEN","KBD","LEGEND","MARK","MENU","METER","NAV","NOSCRIPT","OPTGROUP","OUTPUT","P","PARAM","PRE","PROGRESS","Q","RP","RT","RUBY","S","SAMP","SECTION","SELECT","SMALL","SOURCE","SPAN","SUP","TH","THEAD","TIME","OBJECT","IFRAME","TEXTAREA","TRACK","U","VAR","WBR","FORM","A","BODY","HTML","DIV","TABLE","AREA","TD","TR","LINK","BASE","FONT","HEAD","IMG","MAP","META","OL","LI","TBODY","TITLE","H1","BLINK","AREA","COL","SPAN","FRAMESET","FRAME","UL","OPTION","NOFRAMES","TFOOT","XMP","ISINDEX","CENTER","HR","LABEL","OPTGROUP","AUDIO","VIDEO","TEMPLATE","SVG"]
+				main_buff = "ele_dict = {"
+				for (ele in elements){
+					var id_0 = document.createElement( elements[ele] );
+					all_props = getEleAttributes(id_0)
+					
+					main_buff += "'"+elements[ele] 
+					main_buff += "':"
+					main_buff += all_props
+					main_buff += ","
+				}
+				main_buff = main_buff.slice(0,-1)
+				main_buff += "}"
+				document.getElementById('result').innerHTML = main_buff;
+			}
+		</script>
+	</head>
+	<body onload='generate();'>
+	<b>Output : (Copy paste following python dictionary to your testcase generator script and fuzz using them )</b></br><textarea id="result" rows="100" cols="200"></textarea>
+	</body>
+</html>
